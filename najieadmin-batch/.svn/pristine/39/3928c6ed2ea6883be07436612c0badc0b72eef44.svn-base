@@ -1,0 +1,31 @@
+2019-11-02 17:56:20,001 INFO (QuartzJobLauncher.java:55)- 当前job:callbilledJob
+2019-11-02 17:56:20,056 INFO (SimpleJobLauncher.java:139)- Job: [SimpleJob: [name=callbilledJob]] launched with the following parameters: [{date=1572688580001, jobType=定时}]
+2019-11-02 17:56:20,104 INFO (SimpleStepHandler.java:146)- Executing step: [callbilledStep]
+2019-11-02 17:56:20,132 INFO (CallbilledItemReader.java:30)- 进入到CallbilledItemReader...
+2019-11-02 17:56:20,134 INFO (CallbilledItemReader.java:34)- 获取的话单列表的大小为：0
+2019-11-02 17:56:20,136 INFO (CallbilledProcessor.java:16)- 进入到CallbilledProcessor...
+2019-11-02 17:56:20,137 INFO (CallbilledItemWriter.java:25)- 进入到CallbilledItemWriter中...,items=[{}]
+2019-11-02 17:56:20,148 INFO (CallbilledItemReader.java:30)- 进入到CallbilledItemReader...
+2019-11-02 17:56:20,210 INFO (SimpleJobLauncher.java:142)- Job: [SimpleJob: [name=callbilledJob]] completed with the following parameters: [{date=1572688580001, jobType=定时}] and the following status: [COMPLETED]
+2019-11-02 17:56:20,210 INFO (QuartzJobLauncher.java:60)- callbilledJob_8 was completed successfully
+2019-11-02 17:56:37,328 INFO (SpringApplicationAdminMXBeanRegistrar.java:132)- Application shutdown requested.
+2019-11-02 17:56:37,329 INFO (AbstractApplicationContext.java:989)- Closing org.springframework.boot.web.servlet.context.AnnotationConfigServletWebServerApplicationContext@4466af20: startup date [Sat Nov 02 17:54:58 CST 2019]; root of context hierarchy
+2019-11-02 17:56:37,330 INFO (DefaultLifecycleProcessor.java:366)- Stopping beans in phase 2147483647
+2019-11-02 17:56:37,330 INFO (QuartzScheduler.java:585)- Scheduler callbilledSchedulerFactoryBean_$_NON_CLUSTERED paused.
+2019-11-02 17:56:37,332 INFO (MBeanExporter.java:452)- Unregistering JMX-exposed beans on shutdown
+2019-11-02 17:56:37,333 INFO (MBeanRegistrationSupport.java:183)- Unregistering JMX-exposed beans
+2019-11-02 17:56:37,333 INFO (SchedulerFactoryBean.java:810)- Shutting down Quartz Scheduler
+2019-11-02 17:56:37,333 INFO (QuartzScheduler.java:666)- Scheduler callbilledSchedulerFactoryBean_$_NON_CLUSTERED shutting down.
+2019-11-02 17:56:37,333 INFO (QuartzScheduler.java:585)- Scheduler callbilledSchedulerFactoryBean_$_NON_CLUSTERED paused.
+2019-11-02 17:56:37,333 INFO (QuartzScheduler.java:740)- Scheduler callbilledSchedulerFactoryBean_$_NON_CLUSTERED shutdown complete.
+2019-11-02 17:56:37,334 INFO (HikariDataSource.java:381)- HikariPool-1 - Shutdown initiated...
+2019-11-02 17:56:37,336 INFO (HikariDataSource.java:383)- HikariPool-1 - Shutdown completed.
+2019-11-02 18:21:37,111 INFO (SpringApplicationAdminMXBeanRegistrar.java:159)- Application shutdown requested.
+2019-11-02 18:21:37,113 INFO (QuartzScheduler.java:585)- Scheduler callbilledSchedulerFactoryBean_$_NON_CLUSTERED paused.
+2019-11-02 18:21:37,113 INFO (ExecutorConfigurationSupport.java:208)- Shutting down ExecutorService 'applicationTaskExecutor'
+2019-11-02 18:21:37,114 INFO (SchedulerFactoryBean.java:845)- Shutting down Quartz Scheduler
+2019-11-02 18:21:37,114 INFO (QuartzScheduler.java:666)- Scheduler callbilledSchedulerFactoryBean_$_NON_CLUSTERED shutting down.
+2019-11-02 18:21:37,114 INFO (QuartzScheduler.java:585)- Scheduler callbilledSchedulerFactoryBean_$_NON_CLUSTERED paused.
+2019-11-02 18:21:37,114 INFO (QuartzScheduler.java:740)- Scheduler callbilledSchedulerFactoryBean_$_NON_CLUSTERED shutdown complete.
+2019-11-02 18:21:37,114 INFO (HikariDataSource.java:350)- HikariPool-1 - Shutdown initiated...
+2019-11-02 18:21:37,116 INFO (HikariDataSource.java:352)- HikariPool-1 - Shutdown completed.

@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper     
+PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"    
+"http://ibatis.apache.org/dtd/ibatis-3-mapper.dtd">
+<mapper namespace="com.najie.batch.mapper.CallbilledMapper">
+   
+   <!-- 获取话单列表 -->
+   <select id="queryCallbilledList" resultType="map">
+        select 
+			t.pbxid,
+			t.calldate,
+			t.sequence,
+			t.clid,
+			t.areacode,
+			t.location,
+			t.src,
+			t.dst,
+			t.dcontext,
+			t.dstchannel,
+			t.lastapp,
+			t.lastdata,
+			t.duration,
+			t.billsec,
+			t.disposition,
+			t.amaflags,
+			t.accountcode,
+			t.uniqueid,
+			t.sipcallid,
+			t.linkedid,
+			t.userfield,
+			t.answertime,
+			t.endtime,
+			t.caller,
+			t.callee,
+			t.dnid,
+			t.rdnis,
+			t.ani,
+			t.monitor,
+			t.direct,
+			t.transfer,
+			t.trunk,
+			t.dialstatus,
+			t.hangupcause
+        from cdr t 
+        where date_format(t.calldate,'%Y-%m-%d')=CURRENT_DATE() 
+          and t.amaflags=0 order by t.calldate DESC
+   </select>
+   
+   <!-- 更新话单amaflags状态 -->
+   <update id="updateAmaflagsStatus">
+      update cdr t 
+      set t.amaflags=1 
+      where date_format(t.calldate,'%Y-%m-%d')=CURRENT_DATE() 
+      and t.amaflags=0
+   </update>
+  
+</mapper>

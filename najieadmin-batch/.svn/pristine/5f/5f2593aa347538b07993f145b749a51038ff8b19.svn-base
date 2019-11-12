@@ -1,0 +1,116 @@
+package com.najie.batch.jobs;
+
+import java.util.Map;
+
+import javax.validation.ValidationException;
+
+import org.apache.ibatis.session.SqlSessionFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.batch.core.Job;
+import org.springframework.batch.core.Step;
+import org.springframework.batch.core.configuration.annotation.EnableBatchProcessing;
+import org.springframework.batch.core.configuration.annotation.JobBuilderFactory;
+import org.springframework.batch.core.configuration.annotation.StepBuilderFactory;
+import org.springframework.batch.core.configuration.annotation.StepScope;
+import org.springframework.batch.core.launch.support.RunIdIncrementer;
+import org.springframework.batch.item.ItemProcessor;
+import org.springframework.batch.item.ItemReader;
+import org.springframework.batch.item.ItemWriter;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.dao.DuplicateKeyException;
+import org.springframework.transaction.annotation.Transactional;
+
+import com.najie.batch.JobGlobals;
+import com.najie.batch.processor.CallbilledProcessor;
+import com.najie.batch.reader.CallbilledItemReader;
+import com.najie.batch.writer.CallbilledItemWriter;
+
+/**
+ * @category 获取话单Job
+ *
+ */
+@EnableBatchProcessing
+@Configuration
+public class CallbilledJob {
+    private Logger logger = LoggerFactory.getLogger(CallbilledJob.class);
+    
+	@Autowired
+	private JobBuilderFactory jobBuilderFactory;
+
+	@Autowired
+	private StepBuilderFactory stepBuilderFactory;
+	
+	@Autowired
+    SqlSessionFactory sqlSessionFactory;
+	@Autowired
+	private CallbilledItemReader callbilledItemReader;
+	@Autowired
+	private CallbilledProcessor callbilledProcessor;
+	@Autowired
+	private CallbilledItemWriter callbilledItemWriter;
+	
+	@Bean
+	@StepScope
+	public ItemReader<Map<String,Object>> dayItemReader(){
+		return callbilledItemReader;	
+	}
+	
+	@Bean
+	@StepScope
+	public ItemProcessor<Map<String,Object>,Map<String,Object>> dayItemProcessor(Map<String,Object> item){
+		return callbilledProcessor;
+	}
+	
+	@Bean
+	@StepScope
+	public ItemWriter<Map<String,Object>> dayItemWriter(){
+		return callbilledItemWriter;
+	}
+	
+	
+	/**
+	 * @category 创建step
+	 * @param dayItemReader
+	 * @param dayItemProcessor
+	 * @param dayItemWriter
+	 * @return
+	 */
+	@Transactional
+	@Bean(name="callbilledStep")
+	public Step callbilledStep(@Qualifier("dayItemReader") ItemReader<Map<String,Object>> dayItemReader,
+			            @Qualifier("dayItemProcessor") ItemProcessor<Map<String,Object>,Map<String,Object>> dayItemProcessor,
+			            @Qualifier("dayItemWriter") ItemWriter<Map<String,Object>> dayItemWriter
+			           ) {
+		logger.info("进入Step...:start the callbilledStep");
+		return stepBuilderFactory.get("callbilledStep")
+				                 .<Map<String,Object>,Map<String,Object>>chunk(1) //批处理每次提交10条数据
+				                 .reader(dayItemReader)
+				                 .processor(dayItemProcessor)
+				                 .writer(dayItemWriter)
+				                 .faultTolerant() //定义容错机制
+				                 .skipLimit(Integer.MAX_VALUE) //定义最大容错个数，超过该次数则抛出异常
+				                 .skip(ValidationException.class) //定义容错的异常类，可添加多个。
+				                 .skip(DuplicateKeyException.class)//主键冲突异常
+				                 .build();
+	}
+	
+	
+	/**
+	 * @category 创建Job
+	 * @param callbilledStep
+	 * @return
+	 */
+	@Bean
+	public Job jobCallbilled(@Qualifier("callbilledStep") Step callbilledStep) {
+		logger.info("进入JOB:start the jobCallbilled...");
+		return jobBuilderFactory.get(JobGlobals.CALL_BILLED_JOB)
+				                .incrementer(new RunIdIncrementer())
+				                .start(callbilledStep)
+				                .build();
+	}
+	
+}

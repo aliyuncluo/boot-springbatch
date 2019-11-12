@@ -1,0 +1,15 @@
+server.port=8790
+
+logging.path=C:/temp/logs/
+
+spring.datasource.driver-class-name=com.mysql.jdbc.Driver
+spring.datasource.url=jdbc:mysql://192.168.108.248:3306/mvb2000cdrdb?useUnicode=true&characterEncoding=utf-8&&useSSL=true&serverTimezone=UTC
+spring.datasource.username=najie
+spring.datasource.password=3Umy5FeCzUTf4Uh2
+
+#\u6279\u5904\u7406\u6700\u5927\u4E2A\u6570
+najie.batch.chunk=2000
+#\u67E5\u8BE2\u9875\u5927\u5C0F\u8BBE\u7F6E
+najie.batch.pageSize=1000
+
+najie.batch.cron.callbilled=0 2 * * * ?
